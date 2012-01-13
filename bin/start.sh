@@ -1,3 +1,7 @@
 #!/bin/sh
-cd ../web
+
+basedir=`dirname $0`
+basedir=$basedir/..
+
+cd $basedir/web
 ruby -rubygems simplerest.rb
