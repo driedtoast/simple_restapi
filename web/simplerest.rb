@@ -1,5 +1,8 @@
 require 'sinatra'
-require 'baseapi.rb'
+
+$:.unshift File.expand_path('../', __FILE__)
+
+require 'simple/api'
 
 
 enable :sessions
@@ -40,7 +43,8 @@ def runMethod(name, operation,type='r', args=[])
     operationName = ['delete_',operation].compact.join()     
   end
   serviceName = [ name, operationName].compact.join(":")
-  Simple::Api::serviceCall(serviceName, args)
+  puts serviceName
+  return Simple::Api::serviceCall(serviceName, args)
 end
 
 after do
