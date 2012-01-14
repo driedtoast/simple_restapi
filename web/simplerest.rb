@@ -3,7 +3,7 @@ require 'sinatra'
 $:.unshift File.expand_path('../', __FILE__)
 
 require 'simple/api'
-
+Simple::Api.load()
 
 enable :sessions
 
@@ -43,7 +43,6 @@ def runMethod(name, operation,type='r', args=[])
     operationName = ['delete_',operation].compact.join()     
   end
   serviceName = [ name, operationName].compact.join(":")
-  puts serviceName
   return Simple::Api::serviceCall(serviceName, args)
 end
 
