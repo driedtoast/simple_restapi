@@ -19,29 +19,34 @@ get '/' do
 end
 
 
-get '/api/:name/:operation' do
-  runMethod(params[:name], params[:operation],'r')
+get '/api/:servname/:operation' do
+  runMethod(params[:servname], params[:operation],'r',params)
 end
 
-put '/api/:name/:operation' do
-  runMethod(params[:name], params[:operation],'u')
+put '/api/:servname/:operation' do
+  runMethod(params[:servname], params[:operation],'u',params)
 end
 
-delete '/api/:name/:operation' do
-  runMethod(params[:name], params[:operation],'d')
+delete '/api/:servname/:operation' do
+  runMethod(params[:servname], params[:operation],'d',params)
 end
-
 
 def runMethod(name, operation,type='r', args=[])
   ## todo make switch statement?
+  content_type :json
+  ## TODO filter out operation and servname from args
+  case type
   ## follows crud
-  if(type == 'r')
-    operationName = ['read_',operation].compact.join()     
-  elsif(type == 'u')
-    operationName = ['update_',operation].compact.join()     
-  elsif(type == 'd')
-    operationName = ['delete_',operation].compact.join()     
+    when 'r':
+      operationName = ['read_',operation].compact.join()     
+    when 'u':
+      operationName = ['update_',operation].compact.join()     
+    when 'd':
+      operationName = ['delete_',operation].compact.join()     
+    else
+    ## do nothing    
   end
+  
   serviceName = [ name, operationName].compact.join(":")
   return Simple::Api::serviceCall(serviceName, args)
 end
