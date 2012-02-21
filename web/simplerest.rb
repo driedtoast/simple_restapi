@@ -35,13 +35,13 @@ def runMethod(name, operation,type='r', args=[])
   ## todo make switch statement?
   content_type :json
   ## TODO filter out operation and servname from args
-  case type
+  case(type)
   ## follows crud
-    when 'r':
+    when 'r'
       operationName = ['read_',operation].compact.join()     
-    when 'u':
+    when 'u'
       operationName = ['update_',operation].compact.join()     
-    when 'd':
+    when 'd'
       operationName = ['delete_',operation].compact.join()     
     else
     ## do nothing    
